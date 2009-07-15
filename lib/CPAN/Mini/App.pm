@@ -53,6 +53,7 @@ sub run {
     "a|also=s@"   => \$config{also_mirror},
     "qq"          => sub { $config{quiet} = 2; $config{errors} = 0; },
     'offline'     => \$config{offline},
+    "save"        => \(my $save),
     "q+" => \$config{quiet},
     "f+" => \$config{force},
     "p+" => \$config{perl},
@@ -83,6 +84,10 @@ sub run {
     (defined $config{dirmode} ? (dirmode => $config{dirmode}) : ()),
     (defined $config{errors}  ? (errors  => $config{errors})  : ()),
   );
+
+  if($save){
+    $config{class}->write_config(\%config);
+  }
 }
 
 =head1 SEE ALSO 

@@ -29,6 +29,7 @@ minicpan - uses CPAN::Mini to create or update a local mirror
    -x         - build an exact mirror, getting even normally disallowed files
    -a FILE    - also mirror FILE  (may be used multiple times)
    --offline  - operate in offline mode (generally: do nothing)
+   --save     - write the configuration used to ~/.minicpanrc
 
 =head1 DESCRIPTION
 

@@ -639,6 +639,41 @@ sub read_config {
   return %config;
 }
 
+
+=head2 write_config
+
+  CPAN::Mini->write_config;
+
+This routine writes the configuration values used to the user's .minicpanrc file.
+
+=cut
+
+sub write_config {
+  my ($class, $config) = @_;
+
+  my $filename = File::Spec->catfile($class->__homedir, '.minicpanrc');
+
+  die "refusing to overwrite $filename" if -e $filename;
+
+  open my $fh, '>', $filename 
+    or die "couldn't open config file $filename for writing: $!";
+
+  my @multi_options = qw(module_filters path_filters also_mirror);
+
+  for my $key ( keys %$config ){
+    next if grep { $key eq $_ } @multi_options;
+    print $fh "$key: $config->{$key}\n" if defined $config->{$key};
+  }
+
+  for my $key (@multi_options) {
+    print $fh "$key: ", join(" ", @{$config->{$key}}), "\n" if defined $config->{$key};
+  }
+
+  close $fh or die "failed to close $filename: $!\n";
+
+  print "Wrote config file $filename\n" unless $config->{quiet} && $config->{quiet} > 1;
+}
+
 =head2 
 
 =head1 SEE ALSO
