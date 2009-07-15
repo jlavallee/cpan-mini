@@ -50,6 +50,7 @@ sub run {
     "l|local=s"   => \$config{local},
     "r|remote=s"  => \$config{remote},
     "d|dirmode=s" => \$config{dirmode},
+    "a|also=s@"   => \$config{also_mirror},
     "qq"          => sub { $config{quiet} = 2; $config{errors} = 0; },
     'offline'     => \$config{offline},
     "q+" => \$config{quiet},
